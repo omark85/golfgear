@@ -1,19 +1,16 @@
-FROM microsoft/aspnetcore:2.0-nanoserver-1709 AS base
+FROM microsoft/aspnetcore-build:2.0 AS build-env
 WORKDIR /app
-EXPOSE 80
 
-FROM microsoft/aspnetcore-build:2.0-nanoserver-1709 AS build
-WORKDIR /src
-COPY GolfGear/GolfGear.csproj GolfGear/
-RUN dotnet restore GolfGear/GolfGear.csproj
-COPY . .
-WORKDIR /src/GolfGear
-RUN dotnet build GolfGear.csproj -c Release -o /app
+# Copy csproj and restore
+COPY *.csproj ./
+RUN dotnet restore
 
-FROM build AS publish
-RUN dotnet publish GolfGear.csproj -c Release -o /app
+# Copy everything else and build
+COPY . ./
+RUN dotnet publish -c Release -o out
 
-FROM base AS final
+# Build runtime image
+FROM microsoft/aspnetcore:2.0
 WORKDIR /app
-COPY --from=publish /app .
+COPY --from=build-env /app/out .
 ENTRYPOINT ["dotnet", "GolfGear.dll"]
