@@ -2,7 +2,7 @@ version: '3.4'
 
 services:
   golfgear:
-    image: ${DOCKER_REGISTRY}golfgear
+    image: modermatt/golfgear:v1
     deploy:
       replicas: 5
       resources:
@@ -13,7 +13,23 @@ services:
         condition: on-failure
     ports:
       - "4000:80"
-    networks:
-      - webnet
-networks:
-  webnet:
+  # ravenDb:
+  #   image: ravendb/ravendb
+  #   #command: powershell -c '/Users/mod/Documents/Projects/GolfGear/GolfGear/GolfGear/raven-deploy.ps1'
+  #   ports:
+  #     - "8000:8000"
+  #   environment:
+  #     - RAVEN_ARGS='--Setup.Mode=None'
+  #     - RAVEN_Security_UnsecuredAccessAllowed='PrivateNetwork'
+    #volumes:
+    #  - ./ravenData:/Users/mod/Documents/Projects/GolfGear/Raven/data
+  # visualizer:
+  #   image: dockersamples/visualizer:stable
+  #   ports:
+  #     - "8080:8080"
+  #   volumes:
+  #     - "/var/run/docker.sock:/var/run/docker.sock"
+  #   deploy:
+  #     placement:
+  #       constraints: [node.role == manager]
+
