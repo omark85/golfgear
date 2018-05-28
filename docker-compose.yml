@@ -1,0 +1,8 @@
+version: '3.4'
+
+services:
+  golfgear:
+    image: ${DOCKER_REGISTRY}golfgear
+    build:
+      context: .
+      dockerfile: GolfGear\Dockerfile
