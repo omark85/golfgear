@@ -8,6 +8,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
+using Raven.Client.Documents;
 
 namespace GolfGear
 {
@@ -23,6 +24,16 @@ namespace GolfGear
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddSingleton<IDocumentStore>(_ => {
+                var docStore = new DocumentStore{
+                    Urls = new[] { "http://localhost:8000" },
+                    Database = "GolfGear"
+                };
+                
+                docStore.Initialize();
+
+                return docStore;
+            });
             services.AddMvc();
         }
 

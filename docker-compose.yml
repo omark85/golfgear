@@ -1,28 +1,33 @@
 version: '3.4'
 
 services:
-  golfgear:
-    image: modermatt/golfgear:v1
-    deploy:
-      replicas: 5
-      resources:
-        limits:
-          cpus: "0.1"
-          memory: 50M
-      restart_policy:
-        condition: on-failure
-    ports:
-      - "4000:80"
-  # ravenDb:
-  #   image: ravendb/ravendb
-  #   #command: powershell -c '/Users/mod/Documents/Projects/GolfGear/GolfGear/GolfGear/raven-deploy.ps1'
+  # golfgear:
+  #   image: modermatt/golfgear:v1
+  #   deploy:
+  #     replicas: 5
+  #     resources:
+  #       limits:
+  #         cpus: "0.1"
+  #         memory: 50M
+  #     restart_policy:
+  #       condition: on-failure
   #   ports:
-  #     - "8000:8000"
-  #   environment:
-  #     - RAVEN_ARGS='--Setup.Mode=None'
-  #     - RAVEN_Security_UnsecuredAccessAllowed='PrivateNetwork'
-    #volumes:
-    #  - ./ravenData:/Users/mod/Documents/Projects/GolfGear/Raven/data
+  #     - "4000:80"
+  #   networks: 
+  #     - golfnet
+  ravenDb:
+    image: ravendb/ravendb
+    ports:
+      - "8000:8080"
+    environment:
+      - RAVEN_ARGS='--Setup.Mode=None'
+      - RAVEN_Security_UnsecuredAccessAllowed='PrivateNetwork'
+    deploy:
+      placement:
+        constraints: [node.role == manager]
+    networks: 
+      - golfnet
+
   # visualizer:
   #   image: dockersamples/visualizer:stable
   #   ports:
@@ -33,3 +38,5 @@ services:
   #     placement:
   #       constraints: [node.role == manager]
 
+networks: 
+  golfnet:
