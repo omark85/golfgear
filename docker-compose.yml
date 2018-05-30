@@ -36,6 +36,9 @@ services:
       - RAVEN_Security_UnsecuredAccessAllowed='PrivateNetwork'
       - RAVEN_License_Eula_Accepted=true
       - RAVEN_PublicServerUrl=http://ravendb:8080
+    volumes:
+      - golfgear_ravenConfig:/opt/RavenDB/config
+      - golfgear_ravenData:/opt/RavenDB/Server/RavenData
     deploy:
       placement:
         constraints: [node.role == manager]
@@ -56,3 +59,9 @@ services:
 
 networks: 
   golfnet:
+
+volumes:
+  golfgear_ravenConfig:
+    external: true
+  golfgear_ravenData:
+    external: true
