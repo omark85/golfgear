@@ -15,26 +15,6 @@ namespace GolfGear.Controllers
         public ClubsController(IDocumentStore documentStore)
         {
             this.DocumentStore = documentStore;
-
-            using (var session = this.DocumentStore.OpenSession()){
-                if (!session.Advanced.LoadStartingWith<GolfClub>("GolfClubs").Any()){
-                    var callawayRogue = new GolfClub{
-                        Type = ClubType.Driver,
-                        Make = "Callaway",
-                        Loft = 10.5m,
-                        Shaft = new Shaft {
-                            Type = ShaftType.Graphite,
-                            Make = "Project X",
-                            Model = "HZRDUS Yellow",
-                            Flex = Flex.Stiff,
-                            Weight = 65
-                        }
-                    };
-
-                    session.Store(callawayRogue);
-                    session.SaveChanges();
-                }
-            }
         }
 
         // GET api/values
@@ -43,6 +23,14 @@ namespace GolfGear.Controllers
         {
             using (var session = this.DocumentStore.OpenAsyncSession()){
                 return await session.Advanced.LoadStartingWithAsync<GolfClub>("GolfClubs");
+            }
+        }
+
+        [HttpGet("{id}")]
+        public Task<GolfClub> Get(string id)
+        {
+            using (var session = this.DocumentStore.OpenAsyncSession()){
+                return session.LoadAsync<GolfClub>($"GolfClubs/{id}");
             }
         }
     }
