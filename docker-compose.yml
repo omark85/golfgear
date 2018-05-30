@@ -3,6 +3,8 @@ version: '3.4'
 services:
   golfgear:
     image: golfgear:latest
+    depends_on:
+      - ravendb
     deploy:
       replicas: 5
       resources:
