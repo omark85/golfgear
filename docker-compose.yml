@@ -1,12 +1,21 @@
 version: '3.4'
 
 services:
+  # golfgearui: 
+  #   image: golfgearui:latest
+  #   depends_on:
+  #     - golfgear
+  #   ports:
+  #     - "3000:3000"
+  #   networks:
+  #    - golfnet
+
   golfgear:
     image: golfgear:latest
     depends_on:
       - ravendb
     deploy:
-      replicas: 5
+      replicas: 3
       resources:
         limits:
           cpus: "0.1"
@@ -33,17 +42,17 @@ services:
     networks: 
       - golfnet
 
-  visualizer:
-    image: dockersamples/visualizer:stable
-    ports:
-      - "8080:8080"
-    volumes:
-      - "/var/run/docker.sock:/var/run/docker.sock"
-    deploy:
-      placement:
-        constraints: [node.role == manager]
-    networks:
-      - golfnet
+  # visualizer:
+  #   image: dockersamples/visualizer:stable
+  #   ports:
+  #     - "8080:8080"
+  #   volumes:
+  #     - "/var/run/docker.sock:/var/run/docker.sock"
+  #   deploy:
+  #     placement:
+  #       constraints: [node.role == manager]
+  #   networks:
+  #     - golfnet
 
 networks: 
   golfnet:
