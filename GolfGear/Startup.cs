@@ -1,13 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.Linq;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Options;
 using Raven.Client.Documents;
 
 namespace GolfGear
@@ -37,7 +32,18 @@ namespace GolfGear
 
                 return docStore;
             });
+
+            services.AddCors(options => {
+                options.AddPolicy("CorsPolicy", builder => {
+                    builder.AllowAnyHeader()
+                        .AllowAnyMethod()
+                        .AllowAnyOrigin()
+                        .AllowCredentials();
+                });
+            });
+            
             services.AddMvc();
+            
         }
 
         private void LoadSeedData(DocumentStore documentStore)
@@ -91,7 +97,8 @@ namespace GolfGear
                 app.UseDeveloperExceptionPage();
             }
 
-            app.UseMvc();
+            app.UseCors("CorsPolicy")
+               .UseMvc();
         }
     }
 }
