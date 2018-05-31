@@ -1,6 +1,7 @@
 import { Component, Injectable, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { IGolfClub } from './model';
+import { environment } from '../environments/environment';
 
 @Injectable()
 @Component({
@@ -17,7 +18,7 @@ export class AppComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.httpClient.get<IGolfClub[]>("http://localhost:4000/api/clubs").subscribe(response => {
+    this.httpClient.get<IGolfClub[]>(`${environment.apiBaseUrl}/clubs`).subscribe(response => {
       this.golfClubs = response;
     });
   }
