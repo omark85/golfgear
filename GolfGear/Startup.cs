@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Raven.Client.Documents;
+using Raven.Client.Documents.Indexes;
 
 namespace GolfGear
 {
@@ -29,6 +30,8 @@ namespace GolfGear
                 };
                 
                 docStore.Initialize();
+                
+                IndexCreation.CreateIndexes(typeof(ClubsQueryIndex).Assembly, docStore);
 
                 this.LoadSeedData(docStore);
 
