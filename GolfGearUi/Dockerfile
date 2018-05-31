@@ -11,4 +11,4 @@ COPY . .
 
 RUN ng build --prod
 
-ENTRYPOINT [ "http-server", "./dist/GolfGearUi/", "-p 3000"]
+ENTRYPOINT [ "http-server", "./dist/GolfGearUi/", "-p", "3000"]
