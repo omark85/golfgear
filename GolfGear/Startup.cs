@@ -1,4 +1,5 @@
 ﻿using System.Linq;
+using GolfGear.Clubs;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -48,6 +49,8 @@ namespace GolfGear
 
         private void LoadSeedData(DocumentStore documentStore)
         {
+            var urls = string.Join(", ", documentStore.Urls);
+            
             using (var session = documentStore.OpenSession()){
                 if (!session.Advanced.LoadStartingWith<GolfClub>("GolfClubs").Any()){
                     var callawayRogue = new GolfClub {
