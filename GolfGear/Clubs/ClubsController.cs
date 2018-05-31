@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using GolfGear.Clubs.Model;
 using Microsoft.AspNetCore.Mvc;
 using Raven.Client.Documents;
 
@@ -15,7 +16,6 @@ namespace GolfGear.Clubs
             this.DocumentStore = documentStore;
         }
 
-        // GET api/values
         [HttpGet]
         public async Task<IEnumerable<GolfClub>> Get()
         {

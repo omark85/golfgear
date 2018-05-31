@@ -1,4 +1,4 @@
-namespace GolfGear.Clubs
+namespace GolfGear.Clubs.Model
 {
     public enum Flex 
     {

@@ -1,5 +1,6 @@
 ﻿using System.Linq;
 using GolfGear.Clubs;
+using GolfGear.Clubs.Model;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;

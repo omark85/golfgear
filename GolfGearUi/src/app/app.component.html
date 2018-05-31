@@ -7,6 +7,11 @@
 </div>
 <h2>Look at our amazing products:</h2>
 <ul>
-  <li *ngFor="let club of golfClubs">{{club.make}} {{club.model}}</li>
+  <li *ngFor="let club of golfClubs">{{club.make}} {{club.model}}
+    <ul>
+      <li>Loft: {{club.loft}}°</li>
+      <li>Shaft: {{club.shaft.make}} {{club.shaft.model}} ({{club.shaft.flex}}</li>
+    </ul>
+  </li>
 </ul>
 
