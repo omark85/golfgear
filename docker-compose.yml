@@ -30,12 +30,11 @@ services:
   ravendb:
     image: ravendb/ravendb
     ports:
-      - "8080:8080"
+      - "8081:8080"
     environment:
       - RAVEN_ARGS='--Setup.Mode=None'
       - RAVEN_Security_UnsecuredAccessAllowed='PrivateNetwork'
       - RAVEN_License_Eula_Accepted=true
-      #- RAVEN_PublicServerUrl=http://ravendb:8080
     volumes:
       - golfgear_ravenConfig:/opt/RavenDB/config
       - golfgear_ravenData:/opt/RavenDB/Server/RavenData
@@ -45,17 +44,17 @@ services:
     networks: 
       - golfnet
 
-  # visualizer:
-  #   image: dockersamples/visualizer:stable
-  #   ports:
-  #     - "8080:8080"
-  #   volumes:
-  #     - "/var/run/docker.sock:/var/run/docker.sock"
-  #   deploy:
-  #     placement:
-  #       constraints: [node.role == manager]
-  #   networks:
-  #     - golfnet
+  visualizer:
+    image: dockersamples/visualizer:stable
+    ports:
+      - "8080:8080"
+    volumes:
+      - "/var/run/docker.sock:/var/run/docker.sock"
+    deploy:
+      placement:
+        constraints: [node.role == manager]
+    networks:
+      - golfnet
 
 networks: 
   golfnet:
